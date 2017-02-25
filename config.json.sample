@@ -1,0 +1,38 @@
+{
+  "ip": "127.0.0.1",
+  "port": 4410,
+  "emitters": [
+    {
+      "type": "redis",
+      "config": {
+        "host": "127.0.0.1",
+        "port": 6379,
+        "password": ""
+      },
+      "mode": "split",
+      "channelNamePrefix": ""
+    },
+    {
+      "type": "kafka",
+      "config": {
+        "metadata.broker.list": "127.0.0.1",
+        "security.protocol": "SASL_SSL",
+        "ssl.ca.location": "/etc/ssl/certs",
+        "api.version.request": "true",
+        "sasl.mechanisms": "PLAIN",
+        "sasl.username": "username",
+        "sasl.password": "password",
+        "dr_cb": false
+      },
+      "topic": "",
+      "partition": -1
+    },
+    {
+      "type": "socket.io",
+      "config": {
+        "url": "http://localhost"
+      },
+      "eventName": "ebot logs"
+    }
+  ]
+}

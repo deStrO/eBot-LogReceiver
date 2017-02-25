@@ -1,0 +1,31 @@
+#!/usr/bin/env node
+"use strict";
+
+const Commander = require('commander');
+const fs = require('fs');
+
+Commander
+    .version('0.0.1')
+    .option('-c, --config [file]', 'Load a config file', 'config.json')
+    .parse(process.argv);
+
+process.chdir(__dirname + '/../');
+
+fs.access(Commander.config, fs.constants.R_OK, (err) => {
+    if (!err) {
+        fs.readFile(Commander.config, (err, data) => {
+
+            try {
+                const config = JSON.parse(data);
+                process.nextTick(() => {
+                    const Application = new (require('../app.js'))(config);
+                });
+            } catch (e) {
+                console.log("Unable to parse the config file");
+            }
+        });
+    } else {
+        console.log("Can't read " + Commander.config);
+        process.exit(1);
+    }
+});
